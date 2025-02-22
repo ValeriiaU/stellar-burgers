@@ -12,9 +12,9 @@ export const Feed: FC = () => {
   const dispatch = useDispatch();
   const orders = useSelector(getOrdersSelector);
 
-  useEffect(() => {
-    dispatch(takeGetFeedsApi());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(takeGetFeedsApi());
+  // }, [dispatch]);
 
   if (!orders.length) {
     return <Preloader />;

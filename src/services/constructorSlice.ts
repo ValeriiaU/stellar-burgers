@@ -39,6 +39,14 @@ export const constructorSlice = createSlice({
     },
     clearConstructor: (state) => {
       (state.bun = null), (state.ingredients = []);
+    },
+    moveElemet: (state, action) => {
+      const oldIndex = state.ingredients.findIndex(
+        (ingredient) => ingredient.id === action.payload.ingredientId
+      );
+      const ingredient = state.ingredients[oldIndex];
+      state.ingredients.splice(oldIndex, 1);
+      state.ingredients.splice(action.payload.newIndex, 0, ingredient);
     }
   },
   selectors: {
@@ -49,6 +57,11 @@ export const constructorSlice = createSlice({
   }
 });
 
-export const { addBun, addIngredient, removeIngredient, clearConstructor } =
-  constructorSlice.actions;
+export const {
+  addBun,
+  addIngredient,
+  removeIngredient,
+  clearConstructor,
+  moveElemet
+} = constructorSlice.actions;
 export const { getConstructorItems } = constructorSlice.selectors;

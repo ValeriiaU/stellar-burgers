@@ -20,6 +20,7 @@ import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { checkGetUserApi } from '../../services/userSlice';
 import { getIngredients } from '../../services/ingredientsSlice';
+import { takeGetFeedsApi, takeGetOrdersApi } from '../../services/feedSlice';
 
 const App = () => {
   const naigate = useNavigate();
@@ -36,6 +37,14 @@ const App = () => {
   useEffect(() => {
     dispatch(getIngredients());
   }, []);
+
+  useEffect(() => {
+    dispatch(takeGetFeedsApi());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(takeGetOrdersApi());
+  }, [dispatch]);
 
   return (
     <div className={styles.app}>

@@ -1,4 +1,4 @@
-import { FC, useMemo, useState, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
@@ -8,32 +8,35 @@ import { useLocation, useParams } from 'react-router-dom';
 import {
   getOrderByNumber,
   getOrder,
-  getMyOrderByNumber
+  getMyOrderByNumber,
+  getOrdersIsLoaded
 } from '../../services/feedSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const dispatch = useDispatch();
   const location = useLocation();
-  const { number: orderNumber } = useParams();
+  const { number } = useParams();
+  console.log('order number:', number);
 
-  const orderInformstion = () => {
-    if (location.pathname === `/feed/${orderNumber}`) {
-      dispatch(getOrderByNumber(Number(orderNumber)));
-      const order = useSelector(getOrder);
-      return order;
-    } else {
-      dispatch(getMyOrderByNumber(Number(orderNumber)));
-      const myOrder = useSelector(getOrder);
-      return myOrder;
+  const getOrdersIsLoadedSelector = useSelector(getOrdersIsLoaded);
+
+  useEffect(() => {
+    if (!number) return;
+    if (getOrdersIsLoadedSelector) {
+      if (location.pathname === `/feed/${number}`) {
+        dispatch(getOrderByNumber(Number(number)));
+      } else {
+        dispatch(getMyOrderByNumber(Number(number)));
+      }
     }
-  };
+  }, [dispatch, number, location.pathname, getOrdersIsLoadedSelector]);
 
-  const orderData = orderInformstion();
+  console.log(getOrdersIsLoadedSelector);
+  const orderData = useSelector(getOrder);
+  console.log(orderData);
 
   const ingredients = useSelector(getIngredientsData);
-
-  // const ingredientS: TIngredient[] = [];
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {

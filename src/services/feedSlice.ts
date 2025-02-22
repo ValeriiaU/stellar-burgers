@@ -1,8 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  createSelector
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getFeedsApi, getOrdersApi } from '../utils/burger-api';
 import { TOrder } from '../utils/types';
 
@@ -69,6 +65,7 @@ export const feedSlice = createSlice({
         : 'Sorry, something went wrong';
     });
     builder.addCase(takeGetFeedsApi.fulfilled, (state, action) => {
+      console.log('fulfilled takeGetFeedsApi');
       state.isLoading = false;
       state.err = '';
       state.orders = action.payload.orders;

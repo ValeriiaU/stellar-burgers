@@ -7,9 +7,9 @@ export const ProfileOrders: FC = () => {
   /** TODO: взять переменную из стора */
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(takeGetOrdersApi());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(takeGetOrdersApi());
+  // }, [dispatch]);
 
   const orders = useSelector(getMyOrders);
 
