@@ -21,6 +21,7 @@ import { useDispatch } from '../../services/store';
 import { checkGetUserApi } from '../../services/userSlice';
 import { getIngredients } from '../../services/ingredientsSlice';
 import { takeGetFeedsApi, takeGetOrdersApi } from '../../services/feedSlice';
+import { getCookie } from '../../utils/cookie';
 
 const App = () => {
   const naigate = useNavigate();
@@ -45,6 +46,8 @@ const App = () => {
   useEffect(() => {
     dispatch(takeGetOrdersApi());
   }, [dispatch]);
+
+  console.log(getCookie('accessToken'));
 
   return (
     <div className={styles.app}>

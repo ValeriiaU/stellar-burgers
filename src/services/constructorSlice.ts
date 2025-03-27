@@ -65,3 +65,4 @@ export const {
   moveElemet
 } = constructorSlice.actions;
 export const { getConstructorItems } = constructorSlice.selectors;
+export default constructorSlice.reducer;

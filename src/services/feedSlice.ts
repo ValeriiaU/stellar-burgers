@@ -63,9 +63,9 @@ export const feedSlice = createSlice({
       state.err = action.error.message
         ? action.error.message
         : 'Sorry, something went wrong';
+      state.ordersIsLoaded = false;
     });
     builder.addCase(takeGetFeedsApi.fulfilled, (state, action) => {
-      console.log('fulfilled takeGetFeedsApi');
       state.isLoading = false;
       state.err = '';
       state.orders = action.payload.orders;
@@ -82,11 +82,13 @@ export const feedSlice = createSlice({
       state.err = action.error.message
         ? action.error.message
         : 'Sorry, something went wrong';
+      state.ordersIsLoaded = false;
     });
     builder.addCase(takeGetOrdersApi.fulfilled, (state, action) => {
       state.isLoading = false;
       state.err = '';
       state.myOrders = action.payload;
+      state.ordersIsLoaded = true;
     });
   },
   selectors: {

@@ -45,6 +45,7 @@ export const makeOrderSlice = createSlice({
       state.error = action.error.message
         ? action.error.message
         : 'Sorry, something went wrong';
+      state.orderRequest = false;
     });
     builder.addCase(getOrderBurgerApi.fulfilled, (state, action) => {
       state.error = '';

@@ -20,6 +20,7 @@ export const BurgerConstructorElementUI: FC<BurgerConstructorElementUIProps> =
           handleMoveUp={handleMoveUp}
           isUpDisabled={index === 0}
           isDownDisabled={index === totalItems - 1}
+          data-
         />
         <div className={`${styles.element_fullwidth} ml-2`}>
           <ConstructorElement

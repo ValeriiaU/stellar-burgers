@@ -67,6 +67,7 @@ export const ingredientsSlice = createSlice({
         state.ingredientsDataError = action.error.message
           ? action.error.message
           : null;
+        state.isIngredientsLoaded = false;
       })
       .addCase(getIngredients.fulfilled, (state, action) => {
         state.isIngredientsLoading = false;
