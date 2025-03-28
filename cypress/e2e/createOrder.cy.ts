@@ -1,15 +1,16 @@
 import * as cookieUtils from '../../src/utils/cookie';
+import { SELECTORS } from '../support/selectors';
 
 describe('Create Order', () => {
   beforeEach(() => {
     cy.stub(cookieUtils, 'getCookie').returns(
       'mockedAccessTokenWithManyCharacters'
     );
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+    cy.intercept('GET', 'api/auth/user', {
       fixture: 'user.json'
     }).as('getUser');
 
-    cy.visit('http://localhost:4000/');
+    cy.visit('');
   });
   it('responding to a user data request', () => {
     cy.wait('@getUser').then((interception) => {
@@ -26,6 +27,7 @@ describe('Create Order', () => {
         throw new Error('Response data is undefined');
       }
     });
+
     const containerBuns = cy
       .get(`[data-cy=${'643d69a5c3f7b9001cfa093d'}]`)
       .find('button')
@@ -43,7 +45,7 @@ describe('Create Order', () => {
       .find('button')
       .click();
 
-    cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
+    cy.intercept('POST', 'api/orders', {
       fixture: 'order.json'
     }).as('getOrders');
 
@@ -58,16 +60,16 @@ describe('Create Order', () => {
           number: 71793
         });
 
-        cy.get(`[data-cy=${'modal'}]`).within(() => {
+        cy.get(SELECTORS.MODAL).within(() => {
           cy.get('h2').should('contain', '71793');
           cy.get('button').click();
         });
       }
     });
 
-    cy.get(`[data-cy=${'modal'}]`).should('not.exist');
+    cy.get(SELECTORS.MODAL).should('not.exist');
 
-    cy.get(`[data-cy=${'constructor'}]`).contains('Выберите булки');
-    cy.get(`[data-cy=${'constructor'}]`).contains('Выберите начинку');
+    cy.get(SELECTORS.CONSTRUCTOR).contains('Выберите булки');
+    cy.get(SELECTORS.CONSTRUCTOR).contains('Выберите начинку');
   });
 });
