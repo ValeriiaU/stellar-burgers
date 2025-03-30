@@ -6,9 +6,9 @@ import {
   logoutApi,
   getUserApi,
   updateUserApi
-} from '@api';
+} from '..//utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { deleteCookie, getCookie, setCookie } from '../utils/cookie';
+import { deleteCookie, setCookie } from '../utils/cookie';
 
 export const getRegisterUserApi = createAsyncThunk(
   'user/getRegisterUser',
@@ -61,17 +61,6 @@ export const getUpdateUserApi = createAsyncThunk(
     }
   }
 );
-
-// export const getForgotPasswordApi = createAsyncThunk(
-//   'user/getForgotPassword',
-//   async (data: { email: string }) => {
-//     try {
-//       return await forgotPasswordApi(data);
-//     } catch (err) {
-//       return Promise.reject(err);
-//     }
-//   }
-// );
 
 export type TUserState = {
   email: string;
@@ -168,15 +157,18 @@ export const userSlice = createSlice({
     });
     builder.addCase(checkGetUserApi.pending, (state) => {
       state.error = '';
+      state.isLoading = true;
     }),
       builder.addCase(checkGetUserApi.rejected, (state, action) => {
         state.error = action.error.message
           ? action.error.message
           : 'Sorry, something went wrong';
         state.isAuthChecked = true;
+        state.isLoading = false;
       });
     builder.addCase(checkGetUserApi.fulfilled, (state, action) => {
       state.error = '';
+      state.isLoading = false;
       state.isAuthenticated = true;
       state.isAuthChecked = true;
       state.email = action.payload.user.email;
@@ -194,6 +186,7 @@ export const userSlice = createSlice({
       state.isAuthChecked = true;
     });
     builder.addCase(getUpdateUserApi.fulfilled, (state, action) => {
+      state.isLoading = false;
       state.email = action.payload.user.email;
       state.name = action.payload.user.name;
       state.error = '';

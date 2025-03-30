@@ -31,6 +31,8 @@ export const BurgerConstructor: FC = () => {
     (id): id is string => !!id
   );
 
+  console.log(resault);
+
   const onOrderClick = () => {
     if (!constructorItems.bun || orderRequest) return;
     if (!selectorisAuthenticated) {
